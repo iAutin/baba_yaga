@@ -10,3 +10,13 @@ def get_menu_items():
     menu_items = return_complex_tuple_into_list(menu_items)
     
     return menu_items
+
+def get_test_level_items():
+    connection = sqlite3.connect("baba_yaga/db_generation/level_assets.db")
+    crsr = connection.cursor()
+    crsr.execute("SELECT * FROM test_level_assets")
+    menu_items = crsr.fetchall()
+    connection.close()
+    menu_items = return_complex_tuple_into_list(menu_items)
+    
+    return menu_items
