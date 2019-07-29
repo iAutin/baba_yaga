@@ -13,11 +13,16 @@ screen = pygame.display.set_mode([screen_width,screen_height])
 
 running = True
 time = 0
+background = pygame.image.load("baba_yaga/imgs/menus/main_menu/baba_yaga_menu_background.png")
 while (running == True):
-    time = time + 1
-    if (time == 10000):
-        running = False
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    screen.blit(background,(0,0))
     pygame.display.flip()
+
 program_clock.tick(60)
 
 print("quiting pygame")
