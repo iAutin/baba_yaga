@@ -1,6 +1,7 @@
 import pygame, sys, os
 from initialize_program import initialize_program
 from functions.menu_functions import set_up_menu, get_test_level_items
+from endpoints.menu_endpoints import get_menu_items
 from functions.screen_functions import set_screen_dimensions
 from functions.clicking_checks import check_for_click
 
@@ -14,9 +15,12 @@ pygame.display.init()
 screen = pygame.display.set_mode((screen_dimensions["screen_width"], screen_dimensions["screen_height"]))
 running = True
 current_page = "menu"
+initialized_page = False
 items_on_screen = []
 
 while (running == True):
+    #start of idle loop
+    clicked_down = 0
     #event queue listener
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -24,12 +28,27 @@ while (running == True):
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_xy = pygame.mouse.get_pos()
+            clicked_down = check_for_click(mouse_xy, items_on_screen, screen_dimensions)
+
+        if event.type == pygame.MOUSEBUTTONUP:
+            mouse_xy = pygame.mouse.get_pos()
             check_for_click(mouse_xy, items_on_screen, screen_dimensions)
-    #page interpreter
-    if (current_page == "menu"):
-        items_on_screen = set_up_menu(screen)
         
-    if (current_page == "test_level"):
+    #page interpreter
+    if (current_page == "menu") and initialized_page == False:
+        all_menu_items = get_menu_items()
+        items_on_screen = set_up_menu(screen, all_menu_items)
+        initialized_page = True
+
+    if (current_page == "menu") and initialized_page == True:
+        if clicked_down != 0:
+            for i, item in enumerate(items_on_screen):
+                if clicked_down == item:
+                    items_on_screen[i] = all_menu_items[item[7]]
+        clicked_down = 0
+
+        
+    if (current_page == "test_level") and initialized_page == False:
         items_on_screen = get_test_level_items(screen)
     
     #screen updater

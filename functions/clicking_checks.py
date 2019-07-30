@@ -7,4 +7,6 @@ import pygame, sys
 def check_for_click(mouse_xy, items_on_screen, screen_dimensions):
     for item in items_on_screen:
         if (mouse_xy[0] > item[2]*screen_dimensions["width_unit"]) and (mouse_xy[1] > item[3]*screen_dimensions["height_unit"]) and (mouse_xy[0] < (item[2]+item[4])*screen_dimensions["width_unit"]) and (mouse_xy[1] < (item[3]+item[5])*screen_dimensions["height_unit"]):
-            print(item[1])
+            return item
+    
+    return 0
