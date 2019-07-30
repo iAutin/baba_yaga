@@ -3,7 +3,7 @@ from db_generation.db_generation import generate_menu_database, generate_asset_d
 
 def clear_databases():
     #Deletes all db tables in the try.
-    connection = sqlite3.connect("baba_yaga/db_generation/menu_assets.db")
+    connection = sqlite3.connect("db_generation/menu_assets.db")
     crsr = connection.cursor()
     try:
         crsr.execute("""DROP TABLE menu_items""")
@@ -12,7 +12,7 @@ def clear_databases():
     connection.commit()
     connection.close()
 
-    connection = sqlite3.connect("baba_yaga/db_generation/level_assets.db")
+    connection = sqlite3.connect("db_generation/level_assets.db")
     crsr = connection.cursor()
     try:
         crsr.execute("""DROP TABLE test_level_assets""")
