@@ -1,7 +1,7 @@
 import pygame, sys, os
 from initialize_program import initialize_program
-from menu_endpoints import get_test_level_items, set_up_menu, set_up_test_level
-from screen_endpoints import set_screen_dimensions
+from functions.menu_functions import set_up_menu, get_test_level_items
+from endpoints.screen_endpoints import set_screen_dimensions
 
 initialize_program()
 pygame.init()
@@ -15,7 +15,6 @@ running = True
 current_page = "menu"
 
 while (running == True):
-
     #event queue listener
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
