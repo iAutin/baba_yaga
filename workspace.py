@@ -21,7 +21,8 @@ items_on_screen = []
 while (running == True):
     #start of idle loop
     clicked_down = 0
-    clicked_up = False
+    clicked_up = 0
+    clicked_up_bool = False
     #event queue listener
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -33,7 +34,8 @@ while (running == True):
 
         if event.type == pygame.MOUSEBUTTONUP:
             mouse_xy = pygame.mouse.get_pos()
-            clicked_up = True
+            clicked_up = check_for_click(mouse_xy, items_on_screen, screen_dimensions)
+            clicked_up_bool = True
         
     #page interpreter
     if (current_page == "menu") and initialized_page == False:
@@ -47,15 +49,23 @@ while (running == True):
                 if clicked_down == item:
                     items_on_screen[i] = all_menu_items[item[7]]
         clicked_down = 0
-        
-        if clicked_up == True:
+
+        if clicked_up_bool == True:
             for i, item in enumerate(items_on_screen):
                 if item[1] != item[6]:
                     items_on_screen[i] = all_menu_items[item[6]]
+        if clicked_up != 0:
+            if ((clicked_up[1] == "start_pressed") or (clicked_up[1] == "start_unpressed")):
+                initalized_page = False
+                current_page = "test_level"
+            elif ((clicked_up[1] == "end_pressed") or (clicked_up[1] == "end_unpressed")):
+                running = False
+        clicked_up = 0
 
         
     if (current_page == "test_level") and initialized_page == False:
         items_on_screen = get_test_level_items(screen)
+        initalized_page = True
     
     #screen updater
     #[SQLID, Name, Inital Location X, Inital Location y, width, height, button alternate 1, butotn alternate 2]
