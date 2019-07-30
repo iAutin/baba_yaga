@@ -1,3 +1,4 @@
+#sets all the dictionary units
 def set_screen_dimensions(width, height):
     width_unit = int(width/200)
     height_unit = int(height/100)
