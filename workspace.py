@@ -4,6 +4,7 @@ from functions.menu_functions import set_up_menu, set_up_test_level
 from endpoints.menu_endpoints import get_menu_items, get_test_level_items
 from functions.screen_functions import set_screen_dimensions
 from functions.clicking_checks import check_for_click
+from functions.physics_functions import physics
 
 initialize_program()
 pygame.init()
@@ -14,7 +15,7 @@ screen_dimensions = set_screen_dimensions(1366,768)
 pygame.display.init()
 screen = pygame.display.set_mode((screen_dimensions["screen_width"], screen_dimensions["screen_height"]))
 running = True
-current_page = "menu"
+current_page = "test_level"
 initialized_page = False
 items_on_screen = []
 
@@ -66,11 +67,17 @@ while (running == True):
         all_test_level_items = get_test_level_items()
         items_on_screen = set_up_test_level(screen, all_test_level_items)
         initalized_page = True
+
+        physics(screen, items_on_screen, screen_dimensions, program_clock)
+
+
+
     #screen updater
     #[SQLID, Name, Inital Location X, Inital Location y, width, height, button alternate 1, butotn alternate 2]
     for item in items_on_screen:
         item_surface = pygame.transform.scale(pygame.image.load(item[8]),(item[4]*screen_dimensions["width_unit"],item[5]*screen_dimensions["height_unit"]))
         screen.blit(item_surface, (item[2]*screen_dimensions["width_unit"],item[3]*screen_dimensions["height_unit"]))
+
 
     pygame.display.flip()
     
